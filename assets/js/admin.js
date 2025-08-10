@@ -1,5 +1,6 @@
 // Determine API base: use relative paths when already served via HTTP to avoid origin/path mismatches.
 const API_BASE = (location.origin && location.origin.startsWith('http')) ? '' : 'http://localhost:3000';
+const STATIC_MODE = location.hostname.endsWith('github.io') || location.protocol === 'file:'; // GitHub Pages / local file
 let token = '';
 let content = {};
 
@@ -41,6 +42,22 @@ async function api(path, opts={}){
 
 async function loadContent(){
   sectionsWrap.innerHTML = 'Đang tải...';
+  if(STATIC_MODE){
+    try {
+      const r = await fetch('data/content.json?'+Date.now());
+      if(r.ok){
+        content = await r.json();
+        renderEditors();
+        rawJson.textContent = JSON.stringify(content, null, 2);
+        toast('Đã tải (static)');
+      } else {
+        sectionsWrap.textContent='Không tìm thấy data/content.json';
+      }
+    } catch(e){
+      sectionsWrap.textContent='Không tải được nội dung (static).';
+    }
+    return;
+  }
   try{
     const js = await api('/api/content');
     if(js.ok){ content = js.content || {}; renderEditors(); rawJson.textContent = JSON.stringify(content, null, 2); }
@@ -271,8 +288,24 @@ let dirtyFlag=false; function dirty(){ dirtyFlag=true; saveBtn.textContent='Lưu
 
 let previewTimer=null; function schedulePreview(){ clearTimeout(previewTimer); previewTimer=setTimeout(()=> rawJson.textContent = JSON.stringify(content, null, 2), 400); }
 
+function downloadContentFile(){
+  const blob = new Blob([JSON.stringify(content, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'content.json';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 500);
+}
+
 async function save(){
   if(!dirtyFlag){ toast('Không có thay đổi'); return; }
+  if(STATIC_MODE){
+    downloadContentFile();
+    toast('Đã tạo file content.json. Hãy upload lên repo.');
+    dirtyFlag=false; saveBtn.textContent='Lưu tất cả';
+    return;
+  }
   try{ const js = await api('/api/content', {method:'PUT', body:JSON.stringify(content)}); if(js.ok){ toast('Đã lưu'); dirtyFlag=false; saveBtn.textContent='Lưu tất cả'; } else toast('Lưu thất bại', false); }catch(e){ toast('Lỗi lưu', false); if(e.message==='unauthorized') logout(); }
 }
 
@@ -280,19 +313,28 @@ saveBtn.addEventListener('click', save);
 reloadBtn.addEventListener('click', loadContent);
 
 // Init directly
+// In static mode, skip PIN (optional) or still require; here we still require simple PIN.
 (function pinGate(){
   app.style.display='none';
+  function start(){
+    pinBox.classList.add('hidden');
+    app.style.display='block';
+    if(STATIC_MODE){
+      sessionStatus.textContent='Chế độ STATIC: Sửa xong bấm Lưu để tải file content.json rồi commit.';
+    }
+    loadContent();
+  }
   function enter(){
     const val = (pinInput.value||'').trim();
     if(val === '2006'){
-      pinBox.classList.add('hidden');
-      app.style.display='block';
-      loadContent();
       sessionStatus.textContent='Đã xác thực bằng PIN.';
+      start();
     } else {
       pinStatus.textContent='Sai PIN';
     }
   }
+  // Auto-focus
+  pinInput?.focus();
   pinBtn?.addEventListener('click', enter);
   pinInput?.addEventListener('keydown', e=>{ if(e.key==='Enter') enter(); });
 })();
