@@ -47,6 +47,22 @@
       <button id="save-btn">Lưu tất cả</button>
     </div>
   </div>
+  <div id="server-config" style="background:#111;border:1px solid #333;padding:0.75rem 1rem;border-radius:8px;margin-bottom:1rem;display:flex;flex-wrap:wrap;gap:.6rem;align-items:flex-end;">
+    <div style="flex:1 1 210px;min-width:200px;">
+      <label style="display:block;font-size:.65rem;opacity:.7;margin-bottom:2px;">API URL</label>
+      <input type="text" id="api-url" placeholder="https://your-api.example.com" />
+    </div>
+    <div style="flex:1 1 160px;min-width:150px;">
+      <label style="display:block;font-size:.65rem;opacity:.7;margin-bottom:2px;">Server Password</label>
+      <input type="password" id="api-pass" placeholder="ADMIN_PASSWORD" />
+    </div>
+    <div style="display:flex;gap:.5rem;">
+      <button type="button" id="api-connect" class="secondary">Kết nối</button>
+      <button type="button" id="api-disconnect" class="secondary" style="display:none;">Ngắt</button>
+      <button type="button" id="mode-toggle" class="secondary" title="Chuyển lưu: server <-> static">Chế độ: Static</button>
+    </div>
+    <div id="api-status" style="font-size:.65rem;opacity:.75;flex:1 1 100%;margin-top:.3rem;">Chế độ STATIC: Lưu sẽ tải file content.json.</div>
+  </div>
   <div class="sections" id="sections"></div>
   <h3>Xem JSON hiện tại</h3>
   <pre class="code mono" id="raw-json"></pre>
