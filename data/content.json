@@ -5,8 +5,8 @@
     "summary": "Tóm tắt ngắn gọn 2-3 câu về mục tiêu nghề nghiệp và giá trị mang lại.",
     "actions": {
       "contactText": "Liên hệ",
-      "cvText": "Download CV (PDF)    ",
-      "cvHref": "assets/cv.pdf"
+      "cvText": "Download CV (PDF)    jdkwhdnqwk.dfhqw",
+      "cvHref": "assets/cv.pdfflmbeojdfij"
     }
   },
   "about": {
@@ -55,6 +55,14 @@
           "Tiếng Việt",
           "English"
         ]
+      },
+      {
+        "title": "Nhóm mới",
+        "items": []
+      },
+      {
+        "title": "Nhóm mới",
+        "items": []
       }
     ]
   },
@@ -89,12 +97,19 @@
         "Node.js",
         "GraphQL"
       ]
+    },
+    {
+      "time": "",
+      "company": "",
+      "role": "",
+      "highlights": [],
+      "tech": []
     }
   ],
   "projects": [
     {
       "name": "Tên dự án A",
-      "desc": "Mô tả ngắn",
+      "desc": "Mô tả ngắnlfjeojf",
       "highlights": [
         "Tăng X% chỉ số",
         "Tích hợp ...",
@@ -133,6 +148,13 @@
           "url": "#"
         }
       ]
+    },
+    {
+      "name": "Dự án mới",
+      "desc": "",
+      "highlights": [],
+      "tech": [],
+      "links": []
     }
   ],
   "education": {
@@ -158,6 +180,7 @@
   },
   "social": {
     "links": {
+      "12345678": "dmwjdhqdqwidihdq",
       "website": "/",
       "linkedin": "https://www.linkedin.com/",
       "github": "https://github.com/",
