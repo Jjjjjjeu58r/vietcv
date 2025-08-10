@@ -1,6 +1,8 @@
 // Determine API base: use relative paths when already served via HTTP to avoid origin/path mismatches.
-const API_BASE = (location.origin && location.origin.startsWith('http')) ? '' : 'http://localhost:3000';
-const STATIC_MODE = location.hostname.endsWith('github.io') || location.protocol === 'file:'; // GitHub Pages / local file
+let API_BASE = (location.origin && location.origin.startsWith('http')) ? '' : 'http://localhost:3000';
+const ORIGINAL_STATIC = location.hostname.endsWith('github.io') || location.protocol === 'file:'; // Base detection
+let STATIC_MODE = ORIGINAL_STATIC; // Can be toggled off if user connects to server
+let serverConnected = false;
 let token = '';
 let content = {};
 
@@ -15,6 +17,13 @@ const saveBtn = document.getElementById('save-btn');
 const reloadBtn = document.getElementById('reload-btn');
 const toastEl = document.getElementById('toast');
 const sessionStatus = document.getElementById('session-status');
+// Server config elements
+const apiUrlInput = document.getElementById('api-url');
+const apiPassInput = document.getElementById('api-pass');
+const apiConnectBtn = document.getElementById('api-connect');
+const apiDisconnectBtn = document.getElementById('api-disconnect');
+const apiStatus = document.getElementById('api-status');
+const modeToggleBtn = document.getElementById('mode-toggle');
 
 function toast(msg, ok=true){
   toastEl.textContent = msg;
@@ -338,3 +347,56 @@ reloadBtn.addEventListener('click', loadContent);
   pinBtn?.addEventListener('click', enter);
   pinInput?.addEventListener('keydown', e=>{ if(e.key==='Enter') enter(); });
 })();
+
+// ====== Server Connect Logic ======
+function updateModeUI(){
+  modeToggleBtn.textContent = 'Chế độ: ' + (STATIC_MODE ? 'Static' : 'Server');
+  if(apiStatus){
+    if(STATIC_MODE){
+      apiStatus.textContent = serverConnected ? 'Đã kết nối server nhưng đang ở chế độ STATIC (Lưu sẽ tải file).' : 'Chế độ STATIC: Lưu sẽ tải file content.json.';
+    } else {
+      apiStatus.textContent = serverConnected ? 'Đang lưu trực tiếp lên server.' : 'Server chưa kết nối (nhập URL + password).';
+    }
+  }
+  apiDisconnectBtn.style.display = serverConnected ? 'inline-block' : 'none';
+}
+
+async function connectServer(){
+  const url = (apiUrlInput.value||'').trim().replace(/\/$/,'');
+  const pass = (apiPassInput.value||'').trim();
+  if(!url){ toast('Nhập API URL', false); return; }
+  if(!pass){ toast('Nhập password', false); return; }
+  apiConnectBtn.disabled=true; apiConnectBtn.textContent='Đang kết nối...';
+  try{
+    API_BASE = url;
+    const r = await fetch(API_BASE + '/api/login', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({password:pass})});
+    const js = await r.json().catch(()=>null);
+    if(r.ok && js && js.ok && js.token){
+      token = js.token;
+      serverConnected = true;
+      STATIC_MODE = false; // auto switch to server mode
+      toast('Kết nối thành công');
+      updateModeUI();
+      loadContent();
+    } else {
+      toast('Sai URL hoặc password', false);
+    }
+  }catch(e){
+    toast('Kết nối thất bại', false);
+  }finally{
+    apiConnectBtn.disabled=false; apiConnectBtn.textContent='Kết nối';
+  }
+}
+
+function disconnectServer(){
+  token=''; serverConnected=false; if(ORIGINAL_STATIC) STATIC_MODE=true; updateModeUI(); toast('Đã ngắt kết nối');
+}
+
+apiConnectBtn?.addEventListener('click', connectServer);
+apiDisconnectBtn?.addEventListener('click', disconnectServer);
+modeToggleBtn?.addEventListener('click', ()=>{
+  if(!serverConnected){ STATIC_MODE = !STATIC_MODE; } else { STATIC_MODE = !STATIC_MODE; }
+  updateModeUI();
+});
+
+updateModeUI();
