@@ -1,0 +1,174 @@
+{
+  "hero": {
+    "name": "TÔ QUANG TÙNG ",
+    "title": "Frontend Engineer | UI/UX Enthusiast",
+    "summary": "Tóm tắt ngắn gọn 2-3 câu về mục tiêu nghề nghiệp và giá trị mang lại.",
+    "actions": {
+      "contactText": "Liên hệ",
+      "cvText": "Download CV (PDF)    ",
+      "cvHref": "assets/cv.pdf"
+    }
+  },
+  "about": {
+    "intro": "Viết 1 đoạn giới thiệu chuyên sâu hơn: triết lý làm việc, lĩnh vực quan tâm, thành tựu tiêu biểu, định hướng.",
+    "bullets": [
+      "Tư duy sản phẩm & tối ưu trải nghiệm người dùng",
+      "Chủ động, trách nhiệm, giao tiếp rõ ràng",
+      "Học nhanh & cải tiến liên tục"
+    ]
+  },
+  "skills": {
+    "groups": [
+      {
+        "title": "Kỹ thuật",
+        "items": [
+          "JavaScript / TypeScript",
+          "HTML5, CSS3",
+          "React, Vue hoặc Angular",
+          "RESTful API",
+          "Webpack / Vite"
+        ]
+      },
+      {
+        "title": "Công cụ",
+        "items": [
+          "Git",
+          "Figma",
+          "CI/CD",
+          "Testing",
+          "Docker (cơ bản)"
+        ]
+      },
+      {
+        "title": "Mềm",
+        "items": [
+          "Giao tiếp",
+          "Quản lý thời gian",
+          "Agile",
+          "Giải quyết vấn đề",
+          "Tư duy phản biện"
+        ]
+      },
+      {
+        "title": "Ngôn ngữ",
+        "items": [
+          "Tiếng Việt",
+          "English"
+        ]
+      }
+    ]
+  },
+  "experience": [
+    {
+      "time": "2023 - Hiện tại",
+      "company": "Công ty ABC",
+      "role": "Frontend Developer",
+      "highlights": [
+        "Phát triển & tối ưu UI",
+        "Hợp tác backend kiến trúc API",
+        "Áp dụng best practices"
+      ],
+      "tech": [
+        "React",
+        "TypeScript",
+        "Vite",
+        "CI/CD"
+      ]
+    },
+    {
+      "time": "2021 - 2023",
+      "company": "Công ty XYZ",
+      "role": "Web Engineer",
+      "highlights": [
+        "Dashboard realtime",
+        "Tối ưu SEO & CWV",
+        "Test coverage >85%"
+      ],
+      "tech": [
+        "Vue",
+        "Node.js",
+        "GraphQL"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Tên dự án A",
+      "desc": "Mô tả ngắn",
+      "highlights": [
+        "Tăng X% chỉ số",
+        "Tích hợp ...",
+        "Tối ưu ..."
+      ],
+      "tech": [
+        "React",
+        "API",
+        "Performance"
+      ],
+      "links": [
+        {
+          "label": "Demo",
+          "url": "#"
+        },
+        {
+          "label": "Source",
+          "url": "#"
+        }
+      ]
+    },
+    {
+      "name": "Tên dự án B",
+      "desc": "Mô tả khác",
+      "highlights": [
+        "Điểm nổi bật 1",
+        "Điểm nổi bật 2"
+      ],
+      "tech": [
+        "Node",
+        "Redis"
+      ],
+      "links": [
+        {
+          "label": "Case Study",
+          "url": "#"
+        }
+      ]
+    }
+  ],
+  "education": {
+    "schools": [
+      {
+        "name": "Đại học ABC",
+        "detail": "Cử nhân CNTT (2018 - 2022)",
+        "gpa": "3.5/4.0"
+      }
+    ],
+    "certs": [
+      "Google Professional Cloud (2024)",
+      "IELTS 7.0",
+      "Meta Front-End (Coursera)"
+    ]
+  },
+  "contact": {
+    "email": "you@example.com",
+    "phone": "+84 123 456 789",
+    "location": "Hà Nội / TP.HCM",
+    "linkedin": "linkedin.com/in/username",
+    "availability": "Hiện đang mở cho cơ hội mới."
+  },
+  "social": {
+    "links": {
+      "website": "/",
+      "linkedin": "https://www.linkedin.com/",
+      "github": "https://github.com/",
+      "mail": "you@example.com",
+      "facebook": "https://facebook.com",
+      "x": "https://twitter.com",
+      "instagram": "https://instagram.com",
+      "youtube": "https://youtube.com",
+      "telegram": "https://t.me",
+      "whatsapp": "https://wa.me/",
+      "medium": "https://medium.com"
+    }
+  }
+}
